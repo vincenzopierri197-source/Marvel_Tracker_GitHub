@@ -6,260 +6,1851 @@
 <meta name="theme-color" content="#e62429">
 <meta name="description" content="Marvel Tracker: segui i film e le serie Marvel e salva i tuoi progressi.">
 <title>Marvel Tracker</title>
+
 <style>
 :root{
-  --bg:#0b0b0d; --panel:#151519; --panel2:#1d1d22; --text:#f5f5f7;
-  --muted:#9b9ba3; --red:#e62429; --border:#2b2b31; --green:#48d597;
+  --bg:#0b0b0d;
+  --panel:#151519;
+  --panel2:#1d1d22;
+  --text:#f5f5f7;
+  --muted:#9b9ba3;
+  --red:#e62429;
+  --border:#2b2b31;
+  --green:#48d597;
 }
+
 *{box-sizing:border-box}
+
 html{scroll-behavior:smooth}
+
 body{
-  margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   background:radial-gradient(circle at top,#1b0b0d 0,#0b0b0d 38%,#080809 100%);
-  color:var(--text); min-height:100vh;
+  color:var(--text);
+  min-height:100vh;
 }
+
 button,input{font:inherit}
-.container{width:min(980px,100%);margin:auto;padding:18px 16px 40px}
-.hero{text-align:center;padding:22px 0 14px}
-.hero h1{margin:0;color:var(--red);font-size:clamp(28px,6vw,46px);letter-spacing:1px;text-transform:uppercase}
-.hero p{margin:8px 0 0;color:var(--muted);font-size:14px}
+
+.container{
+  width:min(980px,100%);
+  margin:auto;
+  padding:18px 16px 40px;
+}
+
+.hero{
+  text-align:center;
+  padding:22px 0 14px;
+}
+
+.hero h1{
+  margin:0;
+  color:var(--red);
+  font-size:clamp(28px,6vw,46px);
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.hero p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:14px;
+}
+
 .progress{
-  position:sticky;top:0;z-index:50;background:rgba(11,11,13,.94);
-  backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;
-  padding:14px;margin:10px 0 18px;box-shadow:0 10px 30px rgba(0,0,0,.22)
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(11,11,13,.94);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  margin:10px 0 18px;
+  box-shadow:0 10px 30px rgba(0,0,0,.22)
 }
-.progress-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:700}
-.bar{height:8px;background:#29292e;border-radius:99px;overflow:hidden;margin-top:10px}
-.fill{height:100%;width:0;background:var(--red);transition:width .25s}
-.controls{display:grid;grid-template-columns:1fr auto;gap:10px;margin:14px 0}
-.search,.filter-btn,.reset-btn{
-  border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:13px;
-  padding:12px 14px;outline:none
+
+.progress-top{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:14px;
+  font-weight:700;
 }
-.search:focus{border-color:var(--red)}
-.filters{display:flex;gap:7px;flex-wrap:wrap}
-.filter-btn{cursor:pointer;padding:9px 12px;color:var(--muted)}
-.filter-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+
+.bar{
+  height:8px;
+  background:#29292e;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:10px;
+}
+
+.fill{
+  height:100%;
+  width:0;
+  background:var(--red);
+  transition:width .25s;
+}
+
+.controls{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  margin:14px 0;
+}
+
+.search,
+.filter-btn,
+.reset-btn,
+.code-input{
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+  border-radius:13px;
+  padding:12px 14px;
+  outline:none;
+}
+
+.search:focus,
+.code-input:focus{
+  border-color:var(--red);
+}
+
+.filters{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+
+.filter-btn{
+  cursor:pointer;
+  padding:9px 12px;
+  color:var(--muted);
+}
+
+.filter-btn.active{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+
 .source-note{
-  color:var(--muted);font-size:12px;margin:0 0 14px;line-height:1.5
+  color:var(--muted);
+  font-size:12px;
+  margin:0 0 14px;
+  line-height:1.5;
 }
-.source-note a{color:#ddd}
+
+.source-note a{
+  color:#ddd;
+}
+
 .phase{
-  border:1px solid var(--border);background:rgba(21,21,25,.9);border-radius:17px;
-  margin:12px 0;overflow:hidden
+  border:1px solid var(--border);
+  background:rgba(21,21,25,.9);
+  border-radius:17px;
+  margin:12px 0;
+  overflow:hidden;
 }
+
 .phase-header{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:16px;background:none;border:0;color:var(--text);text-align:left;cursor:pointer
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:16px;
+  background:none;
+  border:0;
+  color:var(--text);
+  text-align:left;
+  cursor:pointer;
 }
-.phase-title{font-weight:800;font-size:16px}
-.phase-meta{color:var(--muted);font-size:12px;margin-top:3px}
-.chevron{font-size:20px;transition:transform .2s}
-.phase.open .chevron{transform:rotate(180deg)}
-.phase-body{display:none;padding:0 10px 10px}
-.phase.open .phase-body{display:block}
+
+.phase-title{
+  font-weight:800;
+  font-size:16px;
+}
+
+.phase-meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.chevron{
+  font-size:20px;
+  transition:transform .2s;
+}
+
+.phase.open .chevron{
+  transform:rotate(180deg);
+}
+
+.phase-body{
+  display:none;
+  padding:0 10px 10px;
+}
+
+.phase.open .phase-body{
+  display:block;
+}
+
 .card{
-  display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid #28282e;
-  border-radius:13px;padding:13px;margin:8px 0;transition:.2s
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--panel2);
+  border:1px solid #28282e;
+  border-radius:13px;
+  padding:13px;
+  margin:8px 0;
+  transition:.2s;
 }
-.card:hover{border-color:#44444c}
-.card.hidden{display:none}
+
+.card:hover{
+  border-color:#44444c;
+}
+
 .check{
-  appearance:none;-webkit-appearance:none;width:24px;height:24px;flex:0 0 24px;
-  border:2px solid #777;border-radius:7px;position:relative;cursor:pointer
+  appearance:none;
+  -webkit-appearance:none;
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  border:2px solid #777;
+  border-radius:7px;
+  position:relative;
+  cursor:pointer;
 }
-.check:checked{background:var(--red);border-color:var(--red)}
-.check:checked:after{content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;border:solid white;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.title{flex:1;font-size:15px;line-height:1.35}
-.card.done .title{color:var(--muted);text-decoration:line-through}
-.badge{font-size:10px;text-transform:uppercase;letter-spacing:.6px;padding:4px 7px;border-radius:99px;background:#303037;color:#bbb}
-.badge.film{color:#f4c1c3}.badge.serie{color:#b9e9d5}
-.empty{padding:22px;text-align:center;color:var(--muted);display:none}
-.actions{display:flex;gap:8px;margin-top:14px}
-.reset-btn{width:100%;cursor:pointer;color:#bbb}
-.status{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;min-height:18px}
+
+.check:checked{
+  background:var(--red);
+  border-color:var(--red);
+}
+
+.check:checked:after{
+  content:"";
+  position:absolute;
+  left:7px;
+  top:3px;
+  width:6px;
+  height:11px;
+  border:solid white;
+  border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+
+.title{
+  flex:1;
+  font-size:15px;
+  line-height:1.35;
+}
+
+.card.done .title{
+  color:var(--muted);
+  text-decoration:line-through;
+}
+
+.badge{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.6px;
+  padding:4px 7px;
+  border-radius:99px;
+  background:#303037;
+  color:#bbb;
+}
+
+.badge.film{
+  color:#f4c1c3;
+}
+
+.badge.serie{
+  color:#b9e9d5;
+}
+
+.empty{
+  padding:22px;
+  text-align:center;
+  color:var(--muted);
+  display:none;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+.reset-btn{
+  width:100%;
+  cursor:pointer;
+  color:#bbb;
+}
+
+.status{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+  margin-top:14px;
+  min-height:18px;
+}
+
+
+/* =========================================================
+   SCHERMATA CODICE
+========================================================= */
+
+#loginScreen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:
+    radial-gradient(circle at top,#1b0b0d 0,#0b0b0d 45%,#080809 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:min(430px,100%);
+  background:rgba(21,21,25,.96);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px 22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  text-align:center;
+}
+
+.login-box h2{
+  margin:0;
+  color:var(--red);
+  font-size:30px;
+}
+
+.login-box p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.code-display{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:5px;
+  color:#fff;
+  background:#0b0b0d;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 10px;
+  margin:20px 0;
+  user-select:all;
+}
+
+.code-input{
+  width:100%;
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+
+.login-button{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:13px;
+  margin-top:12px;
+  background:var(--red);
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.secondary-button{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:13px;
+  margin-top:10px;
+  background:var(--panel2);
+  color:#ddd;
+  cursor:pointer;
+}
+
+.login-error{
+  color:#ff8585;
+  font-size:13px;
+  min-height:20px;
+  margin-top:12px;
+}
+
+#app{
+  display:none;
+}
+
+.user-code{
+  text-align:center;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:8px;
+}
+
+.user-code strong{
+  color:#fff;
+  letter-spacing:2px;
+}
+
 @media(max-width:680px){
-  .controls{grid-template-columns:1fr}
-  .filters{display:grid;grid-template-columns:repeat(3,1fr)}
-  .filter-btn{padding:10px 6px}
-  .card{padding:12px}
-  .title{font-size:14px}
+
+  .controls{
+    grid-template-columns:1fr;
+  }
+
+  .filters{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .filter-btn{
+    padding:10px 6px;
+  }
+
+  .card{
+    padding:12px;
+  }
+
+  .title{
+    font-size:14px;
+  }
+
 }
 </style>
 </head>
+
 <body>
+
+
+<!-- =========================================================
+     SCHERMATA INIZIALE
+========================================================= -->
+
+<section id="loginScreen">
+
+  <div class="login-box">
+
+    <h2>Marvel Tracker</h2>
+
+    <div id="newUserBox">
+
+      <p>
+        Crea il tuo codice personale per iniziare.<br>
+        Conservalo: ti servirà per accedere
+        al tuo tracker da altri dispositivi.
+      </p>
+
+      <div id="generatedCode" class="code-display">
+        ------
+      </div>
+
+      <button
+        id="startButton"
+        class="login-button">
+        INIZIA
+      </button>
+
+      <button
+        id="existingUserButton"
+        class="secondary-button">
+        Ho già un codice
+      </button>
+
+    </div>
+
+
+    <div
+      id="existingUserBox"
+      style="display:none">
+
+      <p>
+        Inserisci il codice personale
+        che hai già creato.
+      </p>
+
+      <input
+        id="codeInput"
+        class="code-input"
+        maxlength="6"
+        autocomplete="off"
+        placeholder="A7K29Q"
+      >
+
+      <button
+        id="loginButton"
+        class="login-button">
+        ACCEDI
+      </button>
+
+      <button
+        id="newUserButton"
+        class="secondary-button">
+        Crea nuovo profilo
+      </button>
+
+      <div
+        id="loginError"
+        class="login-error">
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     MARVEL TRACKER
+========================================================= -->
+
+<div id="app">
+
 <main class="container">
+
   <header class="hero">
+
     <h1>Marvel Tracker</h1>
-    <p>Film e serie · progresso salvato sul dispositivo</p>
+
+    <p>
+      Film e serie · progresso sincronizzato
+    </p>
+
+    <div class="user-code">
+      Codice:
+      <strong id="currentCode"></strong>
+    </div>
+
   </header>
 
-  <section class="progress" aria-label="Progresso">
+
+  <section
+    class="progress"
+    aria-label="Progresso">
+
     <div class="progress-top">
-      <span>Completamento</span>
-      <span id="progressText">0% · 0/0</span>
+
+      <span>
+        Completamento
+      </span>
+
+      <span id="progressText">
+        0% · 0/0
+      </span>
+
     </div>
-    <div class="bar"><div class="fill" id="progressFill"></div></div>
+
+    <div class="bar">
+
+      <div
+        class="fill"
+        id="progressFill">
+      </div>
+
+    </div>
+
   </section>
 
+
   <div class="controls">
-    <input id="search" class="search" type="search" placeholder="Cerca un film o una serie…">
-    <div class="filters" role="group" aria-label="Filtra">
-      <button class="filter-btn active" data-filter="all">Tutti</button>
-      <button class="filter-btn" data-filter="film">Film</button>
-      <button class="filter-btn" data-filter="serie">Serie</button>
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      placeholder="Cerca un film o una serie…"
+    >
+
+    <div
+      class="filters"
+      role="group"
+      aria-label="Filtra">
+
+      <button
+        class="filter-btn active"
+        data-filter="all">
+        Tutti
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="film">
+        Film
+      </button>
+
+      <button
+        class="filter-btn"
+        data-filter="serie">
+        Serie
+      </button>
+
     </div>
+
   </div>
+
 
   <p class="source-note">
+
     Fonte di riferimento per gli aggiornamenti:
-    <a id="sourceLink" target="_blank" rel="noopener">TV Sorrisi e Canzoni</a>.
-    Gli aggiornamenti automatici vengono eseguiti da GitHub Actions.
+
+    <a
+      id="sourceLink"
+      target="_blank"
+      rel="noopener">
+      TV Sorrisi e Canzoni
+    </a>.
+
+    Gli aggiornamenti automatici vengono eseguiti
+    da GitHub Actions.
+
   </p>
 
+
   <section id="content"></section>
-  <div id="empty" class="empty">Nessun titolo trovato.</div>
+
+  <div
+    id="empty"
+    class="empty">
+    Nessun titolo trovato.
+  </div>
+
 
   <div class="actions">
-    <button class="reset-btn" id="resetBtn">Azzera tutti i progressi</button>
+
+    <button
+      class="reset-btn"
+      id="resetBtn">
+      Azzera tutti i progressi
+    </button>
+
   </div>
-  <div id="status" class="status"></div>
+
+  <div
+    id="status"
+    class="status">
+  </div>
+
 </main>
 
-<script>
-const STORAGE_PREFIX = "marvel_tracker_v2_";
-let data = {sections:[], source:""};
+</div>
+
+
+<script type="module">
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  update
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyAoLV9f20TtIsC5RgBYr5Pq0ykIVyZ5i_M",
+
+  authDomain:
+    "marvel-tracker-c2402.firebaseapp.com",
+
+  databaseURL:
+    "https://marvel-tracker-c2402-default-rtdb.europe-west1.firebasedatabase.app",
+
+  projectId:
+    "marvel-tracker-c2402",
+
+  storageBucket:
+    "marvel-tracker-c2402.firebasestorage.app",
+
+  messagingSenderId:
+    "229267443330",
+
+  appId:
+    "1:229267443330:web:78acab05413be13e3e2e9b",
+
+  measurementId:
+    "G-QPLFNBNK13"
+
+};
+
+
+const app =
+  initializeApp(firebaseConfig);
+
+
+const db =
+  getDatabase(app);
+
+
+/* =========================================================
+   STATO
+========================================================= */
+
+const CODE_STORAGE =
+  "marvel_tracker_user_code";
+
+
+let currentCode = null;
+
+let data = {
+  sections: [],
+  source: ""
+};
+
 let filter = "all";
+
 let query = "";
 
-function slug(s){
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+
+/* =========================================================
+   GENERAZIONE CODICE
+========================================================= */
+
+function generateCode(){
+
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  let code = "";
+
+  for(let i = 0; i < 6; i++){
+
+    const index =
+      Math.floor(
+        Math.random() *
+        characters.length
+      );
+
+    code += characters[index];
+
+  }
+
+  return code;
+
 }
-function key(title){ return STORAGE_PREFIX + slug(title); }
+
+
+/* =========================================================
+   CREAZIONE NUOVO PROFILO
+========================================================= */
+
+async function createNewProfile(){
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+  error.textContent =
+    "Creazione del codice...";
+
+
+  try{
+
+    let code;
+
+    let exists = true;
+
+
+    /*
+      Continua a generare codici
+      finché Firebase non ne trova
+      uno già utilizzato.
+    */
+
+    while(exists){
+
+      code =
+        generateCode();
+
+
+      const snapshot =
+        await get(
+          ref(
+            db,
+            "users/" + code
+          )
+        );
+
+
+      exists =
+        snapshot.exists();
+
+    }
+
+
+    /*
+      Crea il nuovo profilo.
+    */
+
+    await set(
+      ref(
+        db,
+        "users/" + code
+      ),
+      {
+
+        createdAt:
+          new Date().toISOString(),
+
+        progress: {}
+
+      }
+    );
+
+
+    /*
+      Salva il codice sul dispositivo
+      per ricordarlo alla prossima apertura.
+    */
+
+    currentCode =
+      code;
+
+
+    localStorage.setItem(
+      CODE_STORAGE,
+      currentCode
+    );
+
+
+    document.getElementById(
+      "generatedCode"
+    ).textContent =
+      currentCode;
+
+
+    enterApp();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "loginError"
+    ).textContent =
+      "Impossibile creare il codice.";
+
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSO CON CODICE
+========================================================= */
+
+async function loginWithCode(){
+
+  const input =
+    document.getElementById(
+      "codeInput"
+    );
+
+
+  const error =
+    document.getElementById(
+      "loginError"
+    );
+
+
+  const code =
+    input.value
+      .trim()
+      .toUpperCase();
+
+
+  if(!/^[A-Z0-9]{6}$/.test(code)){
+
+    error.textContent =
+      "Inserisci un codice di 6 caratteri.";
+
+    return;
+
+  }
+
+
+  error.textContent =
+    "Verifica del codice...";
+
+
+  try{
+
+    const snapshot =
+      await get(
+        ref(
+          db,
+          "users/" + code
+        )
+      );
+
+
+    if(!snapshot.exists()){
+
+      error.textContent =
+        "Codice non trovato.";
+
+      return;
+
+    }
+
+
+    currentCode =
+      code;
+
+
+    localStorage.setItem(
+      CODE_STORAGE,
+      currentCode
+    );
+
+
+    enterApp();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "loginError"
+    ).textContent =
+      "Errore di connessione a Firebase.";
+
+  }
+
+}
+
+
+/* =========================================================
+   CONTROLLO CODICE SALVATO SUL DISPOSITIVO
+========================================================= */
+
+async function checkSavedCode(){
+
+  const savedCode =
+    localStorage.getItem(
+      CODE_STORAGE
+    );
+
+
+  if(!savedCode){
+
+    return false;
+
+  }
+
+
+  try{
+
+    const snapshot =
+      await get(
+        ref(
+          db,
+          "users/" + savedCode
+        )
+      );
+
+
+    if(snapshot.exists()){
+
+      currentCode =
+        savedCode;
+
+      enterApp();
+
+      return true;
+
+    }
+
+
+    /*
+      Se il profilo non esiste più,
+      eliminiamo il codice locale.
+    */
+
+    localStorage.removeItem(
+      CODE_STORAGE
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+
+  return false;
+
+}
+
+
+/* =========================================================
+   ENTRA NELL'APP
+========================================================= */
+
+function enterApp(){
+
+  document.getElementById(
+    "loginScreen"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "app"
+  ).style.display =
+    "block";
+
+
+  document.getElementById(
+    "currentCode"
+  ).textContent =
+    currentCode;
+
+
+  load();
+
+}
+
+
+/* =========================================================
+   FIREBASE PATH PROGRESSI
+========================================================= */
+
+function progressRef(){
+
+  return ref(
+    db,
+    "users/" +
+    currentCode +
+    "/progress"
+  );
+
+}
+
+
+/* =========================================================
+   RECUPERA PROGRESSI
+========================================================= */
+
+async function getProgress(){
+
+  const snapshot =
+    await get(
+      progressRef()
+    );
+
+
+  if(!snapshot.exists()){
+
+    return {};
+
+  }
+
+
+  return snapshot.val() || {};
+
+}
+
+
+/* =========================================================
+   SALVA PROGRESSO
+========================================================= */
+
+async function saveProgress(
+  title,
+  checked
+){
+
+  try{
+
+    await update(
+      progressRef(),
+      {
+
+        [slug(title)]:
+          checked
+
+      }
+    );
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Progressi sincronizzati ✓";
+
+
+  }catch(error){
+
+    console.error(error);
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Errore durante la sincronizzazione.";
+
+  }
+
+}
+
+
+/* =========================================================
+   UTILITY
+========================================================= */
+
+function slug(s){
+
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-|-$/g,
+      ""
+    );
+
+}
+
 
 function allItems(){
-  return data.sections.flatMap(s => s.items);
-}
-function visible(item){
-  const q = query.trim().toLowerCase();
-  const matchQ = !q || item.title.toLowerCase().includes(q);
-  const matchF = filter === "all" || item.type === filter;
-  return matchQ && matchF;
+
+  return data.sections.flatMap(
+    s => s.items
+  );
+
 }
 
-function render(){
-  const content = document.getElementById("content");
+
+function visible(item){
+
+  const q =
+    query
+      .trim()
+      .toLowerCase();
+
+
+  const matchQ =
+    !q ||
+    item.title
+      .toLowerCase()
+      .includes(q);
+
+
+  const matchF =
+    filter === "all" ||
+    item.type === filter;
+
+
+  return matchQ && matchF;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+async function render(){
+
+  const content =
+    document.getElementById(
+      "content"
+    );
+
+
   content.innerHTML = "";
+
+
   let visibleCount = 0;
 
-  data.sections.forEach((section, sIndex) => {
-    const items = section.items.filter(visible);
-    if(!items.length) return;
-    visibleCount += items.length;
 
-    const phase = document.createElement("article");
-    phase.className = "phase open";
+  const progress =
+    await getProgress();
 
-    const header = document.createElement("button");
-    header.className = "phase-header";
-    header.innerHTML = `
-      <span>
-        <span class="phase-title">${escapeHtml(section.phase)}</span>
-        <span class="phase-meta">${items.length} titoli visualizzati · ${section.items.length} totali</span>
-      </span>
-      <span class="chevron">⌄</span>`;
-    header.onclick = () => phase.classList.toggle("open");
 
-    const body = document.createElement("div");
-    body.className = "phase-body";
+  data.sections.forEach(
+    section => {
 
-    items.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      const checked = localStorage.getItem(key(item.title)) === "true";
-      if(checked) card.classList.add("done");
+      const items =
+        section.items
+          .filter(visible);
 
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.className = "check";
-      checkbox.checked = checked;
-      checkbox.setAttribute("aria-label", "Segna come visto: " + item.title);
-      checkbox.onchange = () => {
-        localStorage.setItem(key(item.title), checkbox.checked);
-        card.classList.toggle("done", checkbox.checked);
-        updateProgress();
-      };
 
-      const title = document.createElement("span");
-      title.className = "title";
-      title.textContent = item.title;
+      if(!items.length){
 
-      const badge = document.createElement("span");
-      badge.className = "badge " + item.type;
-      badge.textContent = item.type === "serie" ? "Serie" : "Film";
+        return;
 
-      card.append(checkbox, title, badge);
-      body.appendChild(card);
-    });
+      }
 
-    phase.append(header, body);
-    content.appendChild(phase);
-  });
 
-  document.getElementById("empty").style.display = visibleCount ? "none" : "block";
+      visibleCount +=
+        items.length;
+
+
+      const phase =
+        document.createElement(
+          "article"
+        );
+
+
+      phase.className =
+        "phase open";
+
+
+      const header =
+        document.createElement(
+          "button"
+        );
+
+
+      header.className =
+        "phase-header";
+
+
+      header.innerHTML = `
+
+        <span>
+
+          <span class="phase-title">
+            ${escapeHtml(section.phase)}
+          </span>
+
+          <span class="phase-meta">
+            ${items.length}
+            titoli visualizzati ·
+            ${section.items.length}
+            totali
+          </span>
+
+        </span>
+
+        <span class="chevron">
+          ⌄
+        </span>
+
+      `;
+
+
+      header.onclick =
+        () => {
+
+          phase.classList.toggle(
+            "open"
+          );
+
+        };
+
+
+      const body =
+        document.createElement(
+          "div"
+        );
+
+
+      body.className =
+        "phase-body";
+
+
+      items.forEach(
+        item => {
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+
+          card.className =
+            "card";
+
+
+          const itemKey =
+            slug(item.title);
+
+
+          const checked =
+            progress[itemKey] === true;
+
+
+          if(checked){
+
+            card.classList.add(
+              "done"
+            );
+
+          }
+
+
+          const checkbox =
+            document.createElement(
+              "input"
+            );
+
+
+          checkbox.type =
+            "checkbox";
+
+
+          checkbox.className =
+            "check";
+
+
+          checkbox.checked =
+            checked;
+
+
+          checkbox.setAttribute(
+            "aria-label",
+            "Segna come visto: " +
+            item.title
+          );
+
+
+          checkbox.onchange =
+            async () => {
+
+              card.classList.toggle(
+                "done",
+                checkbox.checked
+              );
+
+
+              await saveProgress(
+                item.title,
+                checkbox.checked
+              );
+
+
+              updateProgress();
+
+            };
+
+
+          const title =
+            document.createElement(
+              "span"
+            );
+
+
+          title.className =
+            "title";
+
+
+          title.textContent =
+            item.title;
+
+
+          const badge =
+            document.createElement(
+              "span"
+            );
+
+
+          badge.className =
+            "badge " +
+            item.type;
+
+
+          badge.textContent =
+            item.type === "serie"
+              ? "Serie"
+              : "Film";
+
+
+          card.append(
+            checkbox,
+            title,
+            badge
+          );
+
+
+          body.appendChild(
+            card
+          );
+
+        }
+      );
+
+
+      phase.append(
+        header,
+        body
+      );
+
+
+      content.appendChild(
+        phase
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "empty"
+  ).style.display =
+    visibleCount
+      ? "none"
+      : "block";
+
+
   updateProgress();
+
 }
 
-function updateProgress(){
-  const items = allItems();
-  const checked = items.filter(item => localStorage.getItem(key(item.title)) === "true").length;
-  const pct = items.length ? Math.round(checked/items.length*100) : 0;
-  document.getElementById("progressText").textContent = `${pct}% · ${checked}/${items.length}`;
-  document.getElementById("progressFill").style.width = pct + "%";
+
+/* =========================================================
+   AGGIORNA PROGRESSO
+========================================================= */
+
+async function updateProgress(){
+
+  const items =
+    allItems();
+
+
+  const progress =
+    await getProgress();
+
+
+  const checked =
+    items.filter(
+      item =>
+        progress[
+          slug(item.title)
+        ] === true
+    ).length;
+
+
+  const pct =
+    items.length
+      ? Math.round(
+          checked /
+          items.length *
+          100
+        )
+      : 0;
+
+
+  document.getElementById(
+    "progressText"
+  ).textContent =
+    `${pct}% · ${checked}/${items.length}`;
+
+
+  document.getElementById(
+    "progressFill"
+  ).style.width =
+    pct + "%";
+
 }
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
 
 function escapeHtml(value){
-  return value.replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[c]));
+
+  return value.replace(
+    /[&<>"']/g,
+    c => ({
+
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+
+    }[c])
+  );
+
 }
+
+
+/* =========================================================
+   CARICAMENTO MARVEL.JSON
+========================================================= */
 
 async function load(){
+
   try{
-    const res = await fetch("data/marvel.json", {cache:"no-store"});
-    if(!res.ok) throw new Error("HTTP " + res.status);
-    data = await res.json();
-    document.getElementById("sourceLink").href = data.source;
-    const date = data.updatedAt ? new Date(data.updatedAt).toLocaleString("it-IT") : "prima pubblicazione";
-    document.getElementById("status").textContent = "Dati aggiornati: " + date;
-    render();
+
+    const res =
+      await fetch(
+        "data/marvel.json",
+        {
+          cache:"no-store"
+        }
+      );
+
+
+    if(!res.ok){
+
+      throw new Error(
+        "HTTP " + res.status
+      );
+
+    }
+
+
+    data =
+      await res.json();
+
+
+    document.getElementById(
+      "sourceLink"
+    ).href =
+      data.source;
+
+
+    const date =
+      data.updatedAt
+        ? new Date(
+            data.updatedAt
+          ).toLocaleString(
+            "it-IT"
+          )
+        : "prima pubblicazione";
+
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Dati aggiornati: " + date;
+
+
+    await render();
+
+
   }catch(err){
-    document.getElementById("status").textContent =
-      "Impossibile caricare i dati. Apri il sito tramite GitHub Pages o un server locale.";
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Impossibile caricare i dati. " +
+      "Apri il sito tramite GitHub Pages " +
+      "o un server locale.";
+
+
     console.error(err);
+
   }
+
 }
 
-document.getElementById("search").addEventListener("input", e => {
-  query = e.target.value; render();
-});
-document.querySelectorAll(".filter-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    filter = btn.dataset.filter;
-    render();
-  });
-});
-document.getElementById("resetBtn").addEventListener("click", () => {
-  if(confirm("Sei sicuro di voler azzerare tutti i progressi?")){
-    Object.keys(localStorage).filter(k => k.startsWith(STORAGE_PREFIX)).forEach(k => localStorage.removeItem(k));
-    render();
-  }
-});
 
-load();
+/* =========================================================
+   BOTTONI LOGIN
+========================================================= */
+
+document
+  .getElementById(
+    "startButton"
+  )
+  .addEventListener(
+    "click",
+    createNewProfile
+  );
+
+
+document
+  .getElementById(
+    "loginButton"
+  )
+  .addEventListener(
+    "click",
+    loginWithCode
+  );
+
+
+document
+  .getElementById(
+    "existingUserButton"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "newUserBox"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "existingUserBox"
+      ).style.display =
+        "block";
+
+
+      document.getElementById(
+        "loginError"
+      ).textContent =
+        "";
+
+
+      document.getElementById(
+        "codeInput"
+      ).focus();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "newUserButton"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "existingUserBox"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "newUserBox"
+      ).style.display =
+        "block";
+
+
+      document.getElementById(
+        "loginError"
+      ).textContent =
+        "";
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "codeInput"
+  )
+  .addEventListener(
+    "input",
+    event => {
+
+      event.target.value =
+        event.target.value
+          .toUpperCase()
+          .replace(
+            /[^A-Z0-9]/g,
+            ""
+          )
+          .slice(0,6);
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "codeInput"
+  )
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(event.key === "Enter"){
+
+        loginWithCode();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   RICERCA
+========================================================= */
+
+document
+  .getElementById(
+    "search"
+  )
+  .addEventListener(
+    "input",
+    event => {
+
+      query =
+        event.target.value;
+
+      render();
+
+    }
+  );
+
+
+/* =========================================================
+   FILTRI
+========================================================= */
+
+document
+  .querySelectorAll(
+    ".filter-btn"
+  )
+  .forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          document
+            .querySelectorAll(
+              ".filter-btn"
+            )
+            .forEach(
+              b =>
+                b.classList
+                  .remove(
+                    "active"
+                  )
+            );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          filter =
+            button.dataset.filter;
+
+
+          render();
+
+        }
+      );
+
+    }
+  );
+
+
+/* =========================================================
+   RESET PROGRESSI
+========================================================= */
+
+document
+  .getElementById(
+    "resetBtn"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      if(
+        !confirm(
+          "Sei sicuro di voler azzerare tutti i progressi?"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      try{
+
+        await set(
+          progressRef(),
+          {}
+        );
+
+
+        await render();
+
+
+        document.getElementById(
+          "status"
+        ).textContent =
+          "Progressi azzerati.";
+
+
+      }catch(error){
+
+        console.error(error);
+
+
+        document.getElementById(
+          "status"
+        ).textContent =
+          "Errore durante l'azzeramento.";
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   AVVIO
+========================================================= */
+
+(async function(){
+
+  const alreadyLogged =
+    await checkSavedCode();
+
+
+  if(!alreadyLogged){
+
+    document.getElementById(
+      "generatedCode"
+    ).textContent =
+      "------";
+
+  }
+
+})();
+
 </script>
+
 </body>
 </html>
