@@ -1,0 +1,303 @@
+{
+  "source": "https://www.sorrisi.com/cinema/migliori-film/la-lista-dei-film-marvel-ordine-cronologico/",
+  "updatedAt": null,
+  "sections": [
+    {
+      "phase": "Già Visti (Fino al 2023)",
+      "items": [
+        {
+          "title": "Captain America: Il Primo Vendicatore",
+          "type": "film"
+        },
+        {
+          "title": "Capitan Marvel",
+          "type": "film"
+        },
+        {
+          "title": "Iron Man",
+          "type": "film"
+        },
+        {
+          "title": "Iron Man 2",
+          "type": "film"
+        },
+        {
+          "title": "L'incredibile Hulk",
+          "type": "film"
+        },
+        {
+          "title": "Thor",
+          "type": "film"
+        },
+        {
+          "title": "The Avengers",
+          "type": "film"
+        },
+        {
+          "title": "Thor: The Dark World",
+          "type": "film"
+        },
+        {
+          "title": "Iron Man 3",
+          "type": "film"
+        },
+        {
+          "title": "Captain America: The Winter Soldier",
+          "type": "film"
+        },
+        {
+          "title": "Guardiani della Galassia",
+          "type": "film"
+        },
+        {
+          "title": "Guardiani della Galassia: Volume 2",
+          "type": "film"
+        },
+        {
+          "title": "I Am Groot",
+          "type": "serie"
+        },
+        {
+          "title": "Avengers: Age of Ultron",
+          "type": "film"
+        },
+        {
+          "title": "Ant-Man",
+          "type": "film"
+        },
+        {
+          "title": "Captain America: Civil War",
+          "type": "film"
+        },
+        {
+          "title": "Black Widow",
+          "type": "film"
+        },
+        {
+          "title": "Black Panther",
+          "type": "film"
+        },
+        {
+          "title": "Spider-Man: Homecoming",
+          "type": "film"
+        },
+        {
+          "title": "Doctor Strange",
+          "type": "film"
+        },
+        {
+          "title": "Thor: Ragnarok",
+          "type": "film"
+        },
+        {
+          "title": "Ant-Man and the Wasp",
+          "type": "film"
+        },
+        {
+          "title": "Avengers: Infinity War",
+          "type": "film"
+        },
+        {
+          "title": "Avengers: Endgame",
+          "type": "film"
+        },
+        {
+          "title": "Loki (Stagione 1)",
+          "type": "serie"
+        },
+        {
+          "title": "What If…? (Stagione 1)",
+          "type": "serie"
+        },
+        {
+          "title": "WandaVision",
+          "type": "serie"
+        },
+        {
+          "title": "The Falcon and the Winter Soldier",
+          "type": "serie"
+        },
+        {
+          "title": "Spider-Man: Far From Home",
+          "type": "film"
+        },
+        {
+          "title": "Shang-Chi e la leggenda dei Dieci Anelli",
+          "type": "film"
+        },
+        {
+          "title": "Spider-Man: No Way Home",
+          "type": "film"
+        },
+        {
+          "title": "Eternals",
+          "type": "film"
+        },
+        {
+          "title": "Doctor Strange nel Multiverso della Follia",
+          "type": "film"
+        },
+        {
+          "title": "Hawkeye",
+          "type": "serie"
+        },
+        {
+          "title": "Moon Knight",
+          "type": "serie"
+        },
+        {
+          "title": "She-Hulk: Attorney at Law",
+          "type": "serie"
+        },
+        {
+          "title": "Ms. Marvel",
+          "type": "serie"
+        },
+        {
+          "title": "Thor: Love and Thunder",
+          "type": "film"
+        },
+        {
+          "title": "Licantropus",
+          "type": "serie"
+        },
+        {
+          "title": "Black Panther: Wakanda Forever",
+          "type": "film"
+        },
+        {
+          "title": "Guardiani della Galassia Holiday Special",
+          "type": "film"
+        },
+        {
+          "title": "Ant-Man and the Wasp: Quantumania",
+          "type": "film"
+        },
+        {
+          "title": "Guardiani della Galassia Vol. 3",
+          "type": "film"
+        },
+        {
+          "title": "Secret Invasion",
+          "type": "serie"
+        },
+        {
+          "title": "The Marvels",
+          "type": "film"
+        }
+      ]
+    },
+    {
+      "phase": "Recuperi & Chiusura Fase 5",
+      "items": [
+        {
+          "title": "Agente Carter (Serie)",
+          "type": "serie"
+        },
+        {
+          "title": "Loki (Stagione 2)",
+          "type": "serie"
+        },
+        {
+          "title": "What If…? (Stagione 2)",
+          "type": "serie"
+        },
+        {
+          "title": "Echo",
+          "type": "serie"
+        },
+        {
+          "title": "Deadpool & Wolverine",
+          "type": "film"
+        },
+        {
+          "title": "Agatha All Along",
+          "type": "serie"
+        },
+        {
+          "title": "Captain America: Brave New World",
+          "type": "film"
+        },
+        {
+          "title": "Daredevil: Rinascita",
+          "type": "serie"
+        },
+        {
+          "title": "Thunderbolts*",
+          "type": "film"
+        },
+        {
+          "title": "Ironheart",
+          "type": "serie"
+        }
+      ]
+    },
+    {
+      "phase": "Fase 6 (2025 - 2027)",
+      "items": [
+        {
+          "title": "I Fantastici Quattro: Gli Inizi",
+          "type": "film"
+        },
+        {
+          "title": "Eyes of Wakanda",
+          "type": "serie"
+        },
+        {
+          "title": "Marvel Zombies",
+          "type": "serie"
+        },
+        {
+          "title": "Wonder Man",
+          "type": "serie"
+        },
+        {
+          "title": "Daredevil: Rinascita 2",
+          "type": "serie"
+        },
+        {
+          "title": "X-Men '97 (Stagione 1 & 2)",
+          "type": "serie"
+        },
+        {
+          "title": "Spider-Man: Brand New Day",
+          "type": "film"
+        },
+        {
+          "title": "Il vostro amichevole Spider-Man di quartiere (St. 1 & 2)",
+          "type": "serie"
+        },
+        {
+          "title": "VisionQuest",
+          "type": "film"
+        },
+        {
+          "title": "Avengers: Doomsday",
+          "type": "film"
+        },
+        {
+          "title": "Avengers: Secret Wars",
+          "type": "film"
+        }
+      ]
+    },
+    {
+      "phase": "Fase 7 (Oltre il 2027)",
+      "items": [
+        {
+          "title": "Ghost Rider",
+          "type": "film"
+        },
+        {
+          "title": "Black Panther 3",
+          "type": "film"
+        },
+        {
+          "title": "Film sugli X-Men",
+          "type": "film"
+        }
+      ]
+    }
+  ],
+  "sourceUpdates": []
+}
