@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#e62429">
-<meta name="description" content="Marvel Tracker: segui i film e le serie Marvel e salva i tuoi progressi.">
+<meta name="description" content="Marvel Tracker">
 <title>Marvel Tracker</title>
 
 <style>
@@ -34,14 +34,118 @@ body{
 button,input{font:inherit}
 
 .container{
-  width:min(980px,100%);
+  width:min(1000px,100%);
   margin:auto;
-  padding:18px 16px 40px;
+  padding:18px 16px 50px;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+/* =========================
+   LOGIN
+========================= */
+
+#loginScreen{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:
+    radial-gradient(circle at top,#1b0b0d 0,#0b0b0d 45%,#080809 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:min(430px,100%);
+  background:rgba(21,21,25,.97);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:30px 22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  text-align:center;
+}
+
+.login-box h2{
+  margin:0;
+  color:var(--red);
+  font-size:30px;
+}
+
+.login-box p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.code-display{
+  font-size:30px;
+  font-weight:800;
+  letter-spacing:5px;
+  color:#fff;
+  background:#0b0b0d;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 10px;
+  margin:20px 0;
+  user-select:all;
+}
+
+.code-input{
+  width:100%;
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:#fff;
+  border-radius:13px;
+  padding:13px;
+  outline:none;
+}
+
+.code-input:focus{
+  border-color:var(--red);
+}
+
+.login-button,
+.secondary-button{
+  width:100%;
+  border-radius:13px;
+  padding:13px;
+  cursor:pointer;
+  font-weight:800;
+}
+
+.login-button{
+  border:0;
+  margin-top:12px;
+  background:var(--red);
+  color:white;
+}
+
+.secondary-button{
+  border:1px solid var(--border);
+  margin-top:10px;
+  background:var(--panel2);
+  color:#ddd;
+}
+
+.login-error{
+  color:#ff8585;
+  font-size:13px;
+  min-height:20px;
+  margin-top:12px;
+}
+
+/* =========================
+   APP
+========================= */
+
+#app{
+  display:none;
+}
 
 .hero{
   text-align:center;
@@ -62,9 +166,20 @@ button,input{font:inherit}
   font-size:14px;
 }
 
-/* =========================================================
+.user-code{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.user-code strong{
+  color:#fff;
+  letter-spacing:2px;
+}
+
+/* =========================
    PROGRESS
-========================================================= */
+========================= */
 
 .progress{
   position:sticky;
@@ -102,9 +217,39 @@ button,input{font:inherit}
   transition:width .25s;
 }
 
-/* =========================================================
+/* =========================
+   SWITCH ORDINE
+========================= */
+
+.order-switch{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:14px 0;
+  padding:5px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+}
+
+.order-btn{
+  border:0;
+  border-radius:10px;
+  padding:11px 8px;
+  background:transparent;
+  color:var(--muted);
+  cursor:pointer;
+  font-weight:700;
+}
+
+.order-btn.active{
+  background:var(--red);
+  color:white;
+}
+
+/* =========================
    CONTROLLI
-========================================================= */
+========================= */
 
 .controls{
   display:grid;
@@ -113,10 +258,7 @@ button,input{font:inherit}
   margin:14px 0;
 }
 
-.search,
-.filter-btn,
-.reset-btn,
-.code-input{
+.search{
   border:1px solid var(--border);
   background:var(--panel);
   color:var(--text);
@@ -125,8 +267,7 @@ button,input{font:inherit}
   outline:none;
 }
 
-.search:focus,
-.code-input:focus{
+.search:focus{
   border-color:var(--red);
 }
 
@@ -137,9 +278,12 @@ button,input{font:inherit}
 }
 
 .filter-btn{
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--muted);
+  border-radius:13px;
   cursor:pointer;
   padding:9px 12px;
-  color:var(--muted);
 }
 
 .filter-btn.active{
@@ -148,9 +292,9 @@ button,input{font:inherit}
   color:#fff;
 }
 
-/* =========================================================
+/* =========================
    SOURCE
-========================================================= */
+========================= */
 
 .source-note{
   color:var(--muted);
@@ -163,9 +307,20 @@ button,input{font:inherit}
   color:#ddd;
 }
 
-/* =========================================================
+/* =========================
    FASI
-========================================================= */
+========================= */
+
+.saga-title{
+  margin:28px 0 10px;
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+}
+
+.saga-title:first-child{
+  margin-top:8px;
+}
 
 .phase{
   border:1px solid var(--border);
@@ -189,15 +344,38 @@ button,input{font:inherit}
   cursor:pointer;
 }
 
+.phase-left{
+  flex:1;
+}
+
 .phase-title{
+  display:block;
   font-weight:800;
   font-size:16px;
 }
 
 .phase-meta{
+  display:block;
   color:var(--muted);
   font-size:12px;
-  margin-top:3px;
+  margin-top:4px;
+}
+
+.phase-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.select-all-btn{
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:#ddd;
+  border-radius:9px;
+  padding:7px 9px;
+  font-size:11px;
+  cursor:pointer;
+  white-space:nowrap;
 }
 
 .chevron{
@@ -218,9 +396,9 @@ button,input{font:inherit}
   display:block;
 }
 
-/* =========================================================
+/* =========================
    CARD
-========================================================= */
+========================= */
 
 .card{
   display:flex;
@@ -311,8 +489,12 @@ button,input{font:inherit}
 
 .reset-btn{
   width:100%;
-  cursor:pointer;
+  border:1px solid var(--border);
+  background:var(--panel);
   color:#bbb;
+  border-radius:13px;
+  padding:12px;
+  cursor:pointer;
 }
 
 .status{
@@ -322,133 +504,6 @@ button,input{font:inherit}
   margin-top:14px;
   min-height:18px;
 }
-
-/* =========================================================
-   SCHERMATA CODICE
-========================================================= */
-
-#loginScreen{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:
-    radial-gradient(circle at top,#1b0b0d 0,#0b0b0d 45%,#080809 100%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.login-box{
-  width:min(430px,100%);
-  background:rgba(21,21,25,.96);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:28px 22px;
-  box-shadow:0 20px 60px rgba(0,0,0,.45);
-  text-align:center;
-}
-
-.login-box h2{
-  margin:0;
-  color:var(--red);
-  font-size:30px;
-}
-
-.login-box p{
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.5;
-}
-
-.code-display{
-  font-size:30px;
-  font-weight:800;
-  letter-spacing:5px;
-  color:#fff;
-  background:#0b0b0d;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:16px 10px;
-  margin:20px 0;
-  user-select:all;
-}
-
-.code-input{
-  width:100%;
-  text-align:center;
-  font-size:22px;
-  font-weight:700;
-  letter-spacing:4px;
-  text-transform:uppercase;
-}
-
-.login-button{
-  width:100%;
-  border:0;
-  border-radius:13px;
-  padding:13px;
-  margin-top:12px;
-  background:var(--red);
-  color:white;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.login-button:disabled{
-  opacity:.6;
-  cursor:wait;
-}
-
-.secondary-button{
-  width:100%;
-  border:1px solid var(--border);
-  border-radius:13px;
-  padding:13px;
-  margin-top:10px;
-  background:var(--panel2);
-  color:#ddd;
-  cursor:pointer;
-}
-
-.secondary-button:disabled{
-  opacity:.6;
-  cursor:wait;
-}
-
-.login-error{
-  color:#ff8585;
-  font-size:13px;
-  min-height:20px;
-  margin-top:12px;
-}
-
-.login-success{
-  color:var(--green);
-  font-size:13px;
-  min-height:20px;
-  margin-top:12px;
-}
-
-#app{
-  display:none;
-}
-
-.user-code{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  margin-top:8px;
-}
-
-.user-code strong{
-  color:#fff;
-  letter-spacing:2px;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media(max-width:680px){
 
@@ -473,6 +528,15 @@ button,input{font:inherit}
     font-size:14px;
   }
 
+  .phase-actions{
+    gap:4px;
+  }
+
+  .select-all-btn{
+    font-size:10px;
+    padding:6px;
+  }
+
 }
 </style>
 </head>
@@ -480,7 +544,7 @@ button,input{font:inherit}
 <body>
 
 <!-- =========================================================
-     SCHERMATA INIZIALE
+     LOGIN
 ========================================================= -->
 
 <section id="loginScreen">
@@ -489,35 +553,27 @@ button,input{font:inherit}
 
     <h2>Marvel Tracker</h2>
 
-    <!-- NUOVO PROFILO -->
-
     <div id="newUserBox">
 
       <p>
         Crea il tuo codice personale per iniziare.<br>
-        Conservalo: ti servirà per accedere
-        al tuo tracker da altri dispositivi.
+        Conservalo per accedere al tuo tracker
+        da altri dispositivi.
       </p>
 
       <div id="generatedCode" class="code-display">
         ------
       </div>
 
-      <button
-        id="startButton"
-        class="login-button">
+      <button id="startButton" class="login-button">
         INIZIA
       </button>
 
-      <button
-        id="existingUserButton"
-        class="secondary-button">
-        Ho già un codice
+      <button id="existingUserButton" class="secondary-button">
+        HO GIÀ UN CODICE
       </button>
 
     </div>
-
-    <!-- CODICE ESISTENTE -->
 
     <div id="existingUserBox" style="display:none">
 
@@ -529,31 +585,20 @@ button,input{font:inherit}
       <input
         id="codeInput"
         class="code-input"
-        type="text"
         maxlength="6"
         autocomplete="off"
-        autocapitalize="characters"
-        spellcheck="false"
-        inputmode="text"
         placeholder="A7K29Q"
       >
 
-      <button
-        id="loginButton"
-        class="login-button">
+      <button id="loginButton" class="login-button">
         ACCEDI
       </button>
 
-      <button
-        id="newUserButton"
-        class="secondary-button">
-        Crea nuovo profilo
+      <button id="newUserButton" class="secondary-button">
+        CREA NUOVO PROFILO
       </button>
 
-      <div
-        id="loginError"
-        class="login-error">
-      </div>
+      <div id="loginError" class="login-error"></div>
 
     </div>
 
@@ -563,134 +608,126 @@ button,input{font:inherit}
 
 
 <!-- =========================================================
-     MARVEL TRACKER
+     APP
 ========================================================= -->
 
 <div id="app">
 
 <main class="container">
 
-  <header class="hero">
+<header class="hero">
 
-    <h1>Marvel Tracker</h1>
+  <h1>Marvel Tracker</h1>
 
-    <p>
-      Film e serie · progresso sincronizzato
-    </p>
-
-    <div class="user-code">
-      Codice:
-      <strong id="currentCode"></strong>
-    </div>
-
-  </header>
-
-
-  <section
-    class="progress"
-    aria-label="Progresso">
-
-    <div class="progress-top">
-
-      <span>
-        Completamento
-      </span>
-
-      <span id="progressText">
-        0% · 0/0
-      </span>
-
-    </div>
-
-    <div class="bar">
-
-      <div
-        class="fill"
-        id="progressFill">
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <div class="controls">
-
-    <input
-      id="search"
-      class="search"
-      type="search"
-      placeholder="Cerca un film o una serie…"
-    >
-
-    <div
-      class="filters"
-      role="group"
-      aria-label="Filtra">
-
-      <button
-        class="filter-btn active"
-        data-filter="all">
-        Tutti
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="film">
-        Film
-      </button>
-
-      <button
-        class="filter-btn"
-        data-filter="serie">
-        Serie
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <p class="source-note">
-
-    Fonte di riferimento per gli aggiornamenti:
-
-    <a
-      id="sourceLink"
-      target="_blank"
-      rel="noopener">
-      TV Sorrisi e Canzoni
-    </a>.
-
-    Gli aggiornamenti automatici vengono eseguiti
-    da GitHub Actions.
-
+  <p>
+    Film e serie · progresso sincronizzato
   </p>
 
-
-  <section id="content"></section>
-
-  <div
-    id="empty"
-    class="empty">
-    Nessun titolo trovato.
+  <div class="user-code">
+    Codice:
+    <strong id="currentCode"></strong>
   </div>
 
+</header>
 
-  <div class="actions">
+
+<section class="progress">
+
+  <div class="progress-top">
+    <span>Completamento</span>
+    <span id="progressText">0% · 0/0</span>
+  </div>
+
+  <div class="bar">
+    <div class="fill" id="progressFill"></div>
+  </div>
+
+</section>
+
+
+<!-- ORDINE -->
+
+<div class="order-switch">
+
+  <button
+    class="order-btn active"
+    data-order="marvel">
+    ORDINE MARVEL
+  </button>
+
+  <button
+    class="order-btn"
+    data-order="release">
+    ORDINE DI USCITA
+  </button>
+
+</div>
+
+
+<div class="controls">
+
+  <input
+    id="search"
+    class="search"
+    type="search"
+    placeholder="Cerca un film o una serie…"
+  >
+
+  <div class="filters">
 
     <button
-      class="reset-btn"
-      id="resetBtn">
-      Azzera tutti i progressi
+      class="filter-btn active"
+      data-filter="all">
+      Tutti
+    </button>
+
+    <button
+      class="filter-btn"
+      data-filter="film">
+      Film
+    </button>
+
+    <button
+      class="filter-btn"
+      data-filter="serie">
+      Serie
     </button>
 
   </div>
 
-  <div
-    id="status"
-    class="status">
-  </div>
+</div>
+
+
+<p class="source-note">
+
+  Fonte di riferimento:
+  <a
+    href="https://www.sorrisi.com/cinema/migliori-film/la-lista-dei-film-marvel-ordine-cronologico/"
+    target="_blank"
+    rel="noopener">
+    TV Sorrisi e Canzoni
+  </a>.
+
+</p>
+
+
+<section id="content"></section>
+
+<div id="empty" class="empty">
+  Nessun titolo trovato.
+</div>
+
+
+<div class="actions">
+
+  <button id="resetBtn" class="reset-btn">
+    Azzera tutti i progressi
+  </button>
+
+</div>
+
+
+<div id="status" class="status"></div>
 
 </main>
 
@@ -705,8 +742,7 @@ button,input{font:inherit}
 
 import {
   initializeApp
-}
-from
+} from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
 import {
@@ -715,8 +751,7 @@ import {
   get,
   set,
   update
-}
-from
+} from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 
@@ -741,10 +776,10 @@ const firebaseConfig = {
     "229267443330",
 
   appId:
-    "1:229267443330:web:78acab05413be13e3e2e9b",
+    "1:229267443330:web:5c85140e9056d2ec3e2e9b",
 
   measurementId:
-    "G-QPLFNBNK13"
+    "G-2QZEN4PB36"
 
 };
 
@@ -758,53 +793,25 @@ const db = getDatabase(app);
    STATO
 ========================================================= */
 
-let currentCode = null;
+const CODE_STORAGE =
+  "marvel_tracker_user_code";
 
-let currentProgress = {};
+let currentCode = null;
 
 let data = {
   sections: [],
   source: ""
 };
 
+let releaseSections = [];
+
 let filter = "all";
 
 let query = "";
 
+let currentOrder = "marvel";
 
-/* =========================================================
-   ELEMENTI
-========================================================= */
-
-const loginScreen =
-  document.getElementById("loginScreen");
-
-const newUserBox =
-  document.getElementById("newUserBox");
-
-const existingUserBox =
-  document.getElementById("existingUserBox");
-
-const generatedCode =
-  document.getElementById("generatedCode");
-
-const codeInput =
-  document.getElementById("codeInput");
-
-const loginError =
-  document.getElementById("loginError");
-
-const startButton =
-  document.getElementById("startButton");
-
-const loginButton =
-  document.getElementById("loginButton");
-
-const existingUserButton =
-  document.getElementById("existingUserButton");
-
-const newUserButton =
-  document.getElementById("newUserButton");
+let progressCache = {};
 
 
 /* =========================================================
@@ -813,19 +820,19 @@ const newUserButton =
 
 function generateCode(){
 
-  const characters =
-    "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   let code = "";
 
-  for(let i = 0; i < 6; i++){
+  for(let i=0;i<6;i++){
 
-    const index =
-      Math.floor(
-        Math.random() * characters.length
-      );
-
-    code += characters[index];
+    code +=
+      chars[
+        Math.floor(
+          Math.random()*chars.length
+        )
+      ];
 
   }
 
@@ -835,75 +842,37 @@ function generateCode(){
 
 
 /* =========================================================
-   VALIDAZIONE CODICE
-========================================================= */
-
-function isValidCode(code){
-
-  return /^[A-Z0-9]{6}$/.test(code);
-
-}
-
-
-/* =========================================================
-   CREAZIONE NUOVO PROFILO
+   CREA PROFILO
 ========================================================= */
 
 async function createNewProfile(){
 
-  setLoginLoading(true);
+  const error =
+    document.getElementById("loginError");
 
-  loginError.className = "login-error";
-
-  loginError.textContent =
+  error.textContent =
     "Creazione del codice...";
 
   try{
 
-    let code = null;
+    let code;
+    let exists = true;
 
-    /*
-      Massimo 20 tentativi.
-      In pratica è estremamente improbabile
-      arrivare anche solo al secondo.
-    */
+    while(exists){
 
-    for(let attempt = 0; attempt < 20; attempt++){
-
-      const candidate =
-        generateCode();
+      code = generateCode();
 
       const snapshot =
         await get(
           ref(
             db,
-            "users/" + candidate
+            "users/" + code
           )
         );
 
-      if(!snapshot.exists()){
-
-        code = candidate;
-
-        break;
-
-      }
+      exists = snapshot.exists();
 
     }
-
-
-    if(!code){
-
-      throw new Error(
-        "Impossibile generare un codice libero."
-      );
-
-    }
-
-
-    /*
-      Creiamo il profilo Firebase.
-    */
 
     await set(
       ref(
@@ -914,68 +883,29 @@ async function createNewProfile(){
         createdAt:
           new Date().toISOString(),
 
-        progress: {}
+        progress:{}
       }
     );
 
-
     currentCode = code;
 
-    currentProgress = {};
-
-
-    generatedCode.textContent =
-      currentCode;
-
-
-    loginError.className =
-      "login-success";
-
-    loginError.textContent =
-      "Codice creato. Accesso in corso...";
-
-
-    /*
-      Piccola pausa per permettere
-      all'utente di vedere il codice.
-    */
-
-    await new Promise(
-      resolve =>
-        setTimeout(resolve, 700)
+    localStorage.setItem(
+      CODE_STORAGE,
+      currentCode
     );
 
+    document.getElementById(
+      "generatedCode"
+    ).textContent = currentCode;
 
     enterApp();
 
+  }catch(err){
 
-  }catch(error){
+    console.error(err);
 
-    console.error(
-      "Errore creazione profilo:",
-      error
-    );
-
-
-    loginError.className =
-      "login-error";
-
-
-    if(error?.code === "PERMISSION_DENIED"){
-
-      loginError.textContent =
-        "Firebase ha rifiutato l'accesso. Controlliamo le Security Rules.";
-
-    }else{
-
-      loginError.textContent =
-        "Impossibile creare il codice. Controlla la connessione.";
-
-    }
-
-  }finally{
-
-    setLoginLoading(false);
+    error.textContent =
+      "Impossibile creare il codice.";
 
   }
 
@@ -983,45 +913,33 @@ async function createNewProfile(){
 
 
 /* =========================================================
-   ACCESSO CON CODICE
+   ACCESSO
 ========================================================= */
 
 async function loginWithCode(){
 
+  const input =
+    document.getElementById("codeInput");
+
+  const error =
+    document.getElementById("loginError");
+
   const code =
-    codeInput.value
+    input.value
       .trim()
       .toUpperCase();
 
+  if(!/^[A-Z0-9]{6}$/.test(code)){
 
-  codeInput.value =
-    code;
-
-
-  if(!isValidCode(code)){
-
-    loginError.className =
-      "login-error";
-
-    loginError.textContent =
+    error.textContent =
       "Inserisci un codice di 6 caratteri.";
-
-    codeInput.focus();
 
     return;
 
   }
 
-
-  setLoginLoading(true);
-
-
-  loginError.className =
-    "login-error";
-
-  loginError.textContent =
+  error.textContent =
     "Verifica del codice...";
-
 
   try{
 
@@ -1033,74 +951,30 @@ async function loginWithCode(){
         )
       );
 
-
     if(!snapshot.exists()){
 
-      loginError.textContent =
+      error.textContent =
         "Codice non trovato.";
-
-      codeInput.focus();
 
       return;
 
     }
 
+    currentCode = code;
 
-    const userData =
-      snapshot.val() || {};
-
-
-    currentCode =
-      code;
-
-
-    currentProgress =
-      userData.progress || {};
-
-
-    loginError.className =
-      "login-success";
-
-    loginError.textContent =
-      "Codice verificato. Accesso in corso...";
-
-
-    await new Promise(
-      resolve =>
-        setTimeout(resolve, 400)
+    localStorage.setItem(
+      CODE_STORAGE,
+      currentCode
     );
-
 
     enterApp();
 
+  }catch(err){
 
-  }catch(error){
+    console.error(err);
 
-    console.error(
-      "Errore accesso:",
-      error
-    );
-
-
-    loginError.className =
-      "login-error";
-
-
-    if(error?.code === "PERMISSION_DENIED"){
-
-      loginError.textContent =
-        "Firebase ha rifiutato l'accesso. Controlliamo le Security Rules.";
-
-    }else{
-
-      loginError.textContent =
-        "Errore di connessione a Firebase.";
-
-    }
-
-  }finally{
-
-    setLoginLoading(false);
+    error.textContent =
+      "Errore di connessione a Firebase.";
 
   }
 
@@ -1108,59 +982,79 @@ async function loginWithCode(){
 
 
 /* =========================================================
-   LOADING PULSANTI
+   CODICE SALVATO
 ========================================================= */
 
-function setLoginLoading(loading){
+async function checkSavedCode(){
 
-  startButton.disabled =
-    loading;
+  const saved =
+    localStorage.getItem(
+      CODE_STORAGE
+    );
 
-  loginButton.disabled =
-    loading;
+  if(!saved) return false;
 
-  existingUserButton.disabled =
-    loading;
+  try{
 
-  newUserButton.disabled =
-    loading;
+    const snapshot =
+      await get(
+        ref(
+          db,
+          "users/" + saved
+        )
+      );
+
+    if(snapshot.exists()){
+
+      currentCode = saved;
+
+      enterApp();
+
+      return true;
+
+    }
+
+    localStorage.removeItem(
+      CODE_STORAGE
+    );
+
+  }catch(err){
+
+    console.error(err);
+
+  }
+
+  return false;
 
 }
 
 
 /* =========================================================
-   ENTRA NEL TRACKER
+   ENTRA
 ========================================================= */
 
-async function enterApp(){
+function enterApp(){
 
-  loginScreen.style.display =
-    "none";
+  document.getElementById(
+    "loginScreen"
+  ).style.display = "none";
 
-  document.getElementById("app")
-    .style.display =
-      "block";
-
+  document.getElementById(
+    "app"
+  ).style.display = "block";
 
   document.getElementById(
     "currentCode"
   ).textContent =
     currentCode;
 
-
-  document.getElementById(
-    "status"
-  ).textContent =
-    "Caricamento dati...";
-
-
-  await load();
+  load();
 
 }
 
 
 /* =========================================================
-   FIREBASE PATH PROGRESSI
+   FIREBASE PROGRESS
 ========================================================= */
 
 function progressRef(){
@@ -1175,91 +1069,27 @@ function progressRef(){
 }
 
 
-/* =========================================================
-   SALVA PROGRESSO
-========================================================= */
-
-async function saveProgress(
-  title,
-  checked
-){
-
-  if(!currentCode){
-
-    return;
-
-  }
-
-
-  const itemKey =
-    slug(title);
-
+async function getProgress(){
 
   try{
 
-    /*
-      Aggiorniamo sia Firebase
-      sia lo stato locale in memoria.
-    */
+    const snapshot =
+      await get(
+        progressRef()
+      );
 
-    currentProgress[itemKey] =
-      checked;
+    progressCache =
+      snapshot.exists()
+        ? snapshot.val() || {}
+        : {};
 
+    return progressCache;
 
-    await update(
-      progressRef(),
-      {
-        [itemKey]:
-          checked
-      }
-    );
+  }catch(err){
 
+    console.error(err);
 
-    document.getElementById(
-      "status"
-    ).textContent =
-      "Progressi sincronizzati ✓";
-
-
-  }catch(error){
-
-    console.error(
-      "Errore salvataggio:",
-      error
-    );
-
-
-    /*
-      Se Firebase non salva,
-      ripristiniamo lo stato precedente
-      leggendo nuovamente il database.
-    */
-
-    try{
-
-      const snapshot =
-        await get(
-          progressRef()
-        );
-
-      currentProgress =
-        snapshot.exists()
-          ? snapshot.val() || {}
-          : {};
-
-    }catch(e){
-
-      console.error(e);
-
-    }
-
-
-    document.getElementById(
-      "status"
-    ).textContent =
-      "Errore durante la sincronizzazione.";
-
-    await render();
+    return progressCache;
 
   }
 
@@ -1267,7 +1097,47 @@ async function saveProgress(
 
 
 /* =========================================================
-   UTILITY
+   SALVA SINGOLA SPUNTA
+========================================================= */
+
+async function saveProgress(title,checked){
+
+  const key =
+    slug(title);
+
+  progressCache[key] =
+    checked;
+
+  try{
+
+    await update(
+      progressRef(),
+      {
+        [key]:checked
+      }
+    );
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Progressi sincronizzati ✓";
+
+  }catch(err){
+
+    console.error(err);
+
+    document.getElementById(
+      "status"
+    ).textContent =
+      "Errore durante la sincronizzazione.";
+
+  }
+
+}
+
+
+/* =========================================================
+   SLUG
 ========================================================= */
 
 function slug(s){
@@ -1291,15 +1161,241 @@ function slug(s){
 }
 
 
-function allItems(){
+/* =========================================================
+   ORDINE MARVEL
+========================================================= */
 
-  return data.sections.flatMap(
-    section =>
-      section.items || []
-  );
+/*
+   Questa struttura segue ESATTAMENTE
+   l'ordine fornito dall'utente.
+*/
+
+const marvelOrder = [
+
+  {
+    saga:"Saga dell'Infinito",
+    phase:"Fase 1",
+    items:[
+      ["Iron Man","film",2008],
+      ["L'Incredibile Hulk","film",2008],
+      ["Iron Man 2","film",2010],
+      ["Thor","film",2011],
+      ["Captain America: Il Primo Vendicatore","film",2011],
+      ["Avengers","film",2012]
+    ]
+  },
+
+  {
+    saga:"Saga dell'Infinito",
+    phase:"Fase 2",
+    items:[
+      ["Iron Man 3","film",2013],
+      ["Thor: The Dark World","film",2013],
+      ["Captain America: The Winter Soldier","film",2014],
+      ["Guardiani della Galassia","film",2014],
+      ["Avengers: Age of Ultron","film",2015],
+      ["Agente Carter - serie","serie",2015],
+      ["Ant-Man","film",2015]
+    ]
+  },
+
+  {
+    saga:"Saga dell'Infinito",
+    phase:"Fase 3",
+    items:[
+      ["Captain America: Civil War","film",2016],
+      ["Doctor Strange","film",2016],
+      ["Guardiani della Galassia Vol. 2","film",2017],
+      ["Spider-Man: Homecoming","film",2017],
+      ["Thor: Ragnarok","film",2017],
+      ["Black Panther","film",2018],
+      ["Ant-Man and the Wasp","film",2018],
+      ["Avengers: Infinity War","film",2018],
+      ["Captain Marvel","film",2019],
+      ["Avengers: Endgame","film",2019],
+      ["Spider-Man: Far From Home","film",2019]
+    ]
+  },
+
+  {
+    saga:"Saga del Multiverso",
+    phase:"Fase 4",
+    items:[
+      ["Wanda Vision - serie","serie",2021],
+      ["The Falcon and the Winter Soldier - serie","serie",2021],
+      ["Loki - serie","serie",2021],
+      ["Black Widow","film",2021],
+      ["What If…? - serie","serie",2021],
+      ["Shang-Chi e la Leggenda dei Dieci Anelli","film",2021],
+      ["Eternals","film",2021],
+      ["Hawkeye - serie","serie",2021],
+      ["Spider-Man: No Way Home","film",2021],
+      ["Moon Knight - serie","serie",2022],
+      ["Doctor Strange nel Multiverso della Follia","film",2022],
+      ["Ms. Marvel - serie","serie",2022],
+      ["Thor: Love and Thunder","film",2022],
+      ["She-Hulk: Attorney at Law - serie","serie",2022],
+      ["Black Panther: Wakanda Forever","film",2022]
+    ]
+  },
+
+  {
+    saga:"Saga del Multiverso",
+    phase:"Fase 5",
+    items:[
+      ["Ant-Man and the Wasp: Quantumania","film",2023],
+      ["Guardiani della Galassia Vol. 3","film",2023],
+      ["Secret Invasion - serie","serie",2023],
+      ["Loki - serie (seconda stagione, 2023)","serie",2023],
+      ["The Marvels","film",2023],
+      ["What If…? - serie (2023)","serie",2023],
+      ["Echo - serie","serie",2024],
+      ["Deadpool & Wolverine","film",2024],
+      ["Agatha: All Along - serie","serie",2024],
+      ["Captain America: Brave New World","film",2025],
+      ["Daredevil: Rinascita - serie","serie",2025],
+      ["Thunderbolts*","film",2025],
+      ["Ironheart - serie","serie",2025]
+    ]
+  },
+
+  {
+    saga:"Saga del Multiverso",
+    phase:"Fase 6",
+    items:[
+      ["I Fantastici Quattro: Gli Inizi","film",2025],
+      ["Eyes of Wakanda - serie","serie",2025],
+      ["Marvel Zombies - serie","serie",2025],
+      ["Wonder Man - serie","serie",2026],
+      ["Daredevil: Rinascita 2","serie",2026],
+      ["X-Men '97 2 - serie","serie",2026],
+      ["Spider-Man: Brand New Day","film",2026],
+      ["Il vostro amichevole Spider-Man di quartiere 2","serie",2026],
+      ["Avengers: Doomsday","film",2026],
+      ["VisionQuest","serie",2026],
+      ["Avengers: Secret Wars","film",2027]
+    ]
+  },
+
+  {
+    saga:"Saga del Multiverso",
+    phase:"Fase 7",
+    items:[
+      ["Ghost Rider","film",2028],
+      ["Black Panther 3","film",2028],
+      ["Film sugli Xmen","film",2028]
+    ]
+  }
+
+];
+
+
+/* =========================================================
+   CONVERSIONE DATI
+========================================================= */
+
+function buildMarvelData(){
+
+  return marvelOrder.map(section => ({
+
+    saga:section.saga,
+
+    phase:section.phase,
+
+    items:section.items.map(x => ({
+
+      title:x[0],
+      type:x[1],
+      year:x[2]
+
+    }))
+
+  }));
 
 }
 
+
+/* =========================================================
+   ORDINE DI USCITA
+========================================================= */
+
+function buildReleaseData(){
+
+  const all =
+    buildMarvelData()
+      .flatMap(section =>
+        section.items.map(item => ({
+          ...item,
+          saga:section.saga,
+          originalPhase:section.phase
+        }))
+      );
+
+
+  all.sort((a,b) => {
+
+    if(a.year !== b.year)
+      return a.year - b.year;
+
+    return a.title.localeCompare(
+      b.title,
+      "it"
+    );
+
+  });
+
+
+  const grouped = {};
+
+
+  all.forEach(item => {
+
+    const key =
+      item.year;
+
+    if(!grouped[key])
+      grouped[key] = [];
+
+    grouped[key].push(item);
+
+  });
+
+
+  return Object.keys(grouped)
+    .sort((a,b) => Number(a)-Number(b))
+    .map(year => ({
+
+      saga:"Ordine di uscita",
+
+      phase:String(year),
+
+      items:grouped[year]
+
+    }));
+
+}
+
+
+/* =========================================================
+   DATI
+========================================================= */
+
+function currentSections(){
+
+  if(currentOrder === "marvel"){
+
+    return buildMarvelData();
+
+  }
+
+  return buildReleaseData();
+
+}
+
+
+/* =========================================================
+   FILTRO
+========================================================= */
 
 function visible(item){
 
@@ -1308,18 +1404,15 @@ function visible(item){
       .trim()
       .toLowerCase();
 
-
   const matchQ =
     !q ||
     item.title
       .toLowerCase()
       .includes(q);
 
-
   const matchF =
     filter === "all" ||
     item.type === filter;
-
 
   return matchQ && matchF;
 
@@ -1330,241 +1423,379 @@ function visible(item){
    RENDER
 ========================================================= */
 
-function render(){
+async function render(){
 
   const content =
     document.getElementById(
       "content"
     );
 
-
   content.innerHTML = "";
 
+  const progress =
+    await getProgress();
+
+  const sections =
+    currentSections();
 
   let visibleCount = 0;
 
-
-  data.sections.forEach(
-    section => {
-
-      const items =
-        (section.items || [])
-          .filter(visible);
+  let lastSaga = "";
 
 
-      if(!items.length){
+  sections.forEach((section,index) => {
 
-        return;
+    const items =
+      section.items.filter(
+        visible
+      );
 
-      }
-
-
-      visibleCount +=
-        items.length;
-
-
-      const phase =
-        document.createElement(
-          "article"
-        );
+    if(!items.length)
+      return;
 
 
-      phase.className =
-        "phase open";
+    visibleCount +=
+      items.length;
 
 
-      const header =
-        document.createElement(
-          "button"
-        );
+    if(
+      currentOrder === "marvel" &&
+      section.saga !== lastSaga
+    ){
 
-
-      header.className =
-        "phase-header";
-
-
-      header.innerHTML = `
-
-        <span>
-
-          <span class="phase-title">
-            ${escapeHtml(section.phase)}
-          </span>
-
-          <span class="phase-meta">
-            ${items.length}
-            titoli visualizzati ·
-            ${section.items.length}
-            totali
-          </span>
-
-        </span>
-
-        <span class="chevron">
-          ⌄
-        </span>
-
-      `;
-
-
-      header.onclick =
-        () => {
-
-          phase.classList.toggle(
-            "open"
-          );
-
-        };
-
-
-      const body =
+      const sagaTitle =
         document.createElement(
           "div"
         );
 
+      sagaTitle.className =
+        "saga-title";
 
-      body.className =
-        "phase-body";
-
-
-      items.forEach(
-        item => {
-
-          const card =
-            document.createElement(
-              "div"
-            );
-
-
-          card.className =
-            "card";
-
-
-          const itemKey =
-            slug(item.title);
-
-
-          const checked =
-            currentProgress[itemKey]
-            === true;
-
-
-          if(checked){
-
-            card.classList.add(
-              "done"
-            );
-
-          }
-
-
-          const checkbox =
-            document.createElement(
-              "input"
-            );
-
-
-          checkbox.type =
-            "checkbox";
-
-
-          checkbox.className =
-            "check";
-
-
-          checkbox.checked =
-            checked;
-
-
-          checkbox.setAttribute(
-            "aria-label",
-            "Segna come visto: " +
-            item.title
-          );
-
-
-          checkbox.onchange =
-            async () => {
-
-              const newValue =
-                checkbox.checked;
-
-
-              card.classList.toggle(
-                "done",
-                newValue
-              );
-
-
-              await saveProgress(
-                item.title,
-                newValue
-              );
-
-
-              updateProgress();
-
-            };
-
-
-          const title =
-            document.createElement(
-              "span"
-            );
-
-
-          title.className =
-            "title";
-
-
-          title.textContent =
-            item.title;
-
-
-          const badge =
-            document.createElement(
-              "span"
-            );
-
-
-          badge.className =
-            "badge " +
-            item.type;
-
-
-          badge.textContent =
-            item.type === "serie"
-              ? "Serie"
-              : "Film";
-
-
-          card.append(
-            checkbox,
-            title,
-            badge
-          );
-
-
-          body.appendChild(
-            card
-          );
-
-        }
-      );
-
-
-      phase.append(
-        header,
-        body
-      );
-
+      sagaTitle.textContent =
+        section.saga;
 
       content.appendChild(
-        phase
+        sagaTitle
       );
 
+      lastSaga =
+        section.saga;
+
     }
-  );
+
+
+    const phase =
+      document.createElement(
+        "article"
+      );
+
+    phase.className =
+      "phase open";
+
+
+    const header =
+      document.createElement(
+        "button"
+      );
+
+    header.className =
+      "phase-header";
+
+
+    const left =
+      document.createElement(
+        "span"
+      );
+
+    left.className =
+      "phase-left";
+
+
+    const title =
+      document.createElement(
+        "span"
+      );
+
+    title.className =
+      "phase-title";
+
+    title.textContent =
+      section.phase;
+
+
+    const meta =
+      document.createElement(
+        "span"
+      );
+
+    meta.className =
+      "phase-meta";
+
+
+    const completed =
+      section.items.filter(
+        item =>
+          progress[
+            slug(item.title)
+          ] === true
+      ).length;
+
+
+    meta.textContent =
+      `${completed}/${section.items.length} completati`;
+
+
+    left.append(
+      title,
+      meta
+    );
+
+
+    const actions =
+      document.createElement(
+        "span"
+      );
+
+    actions.className =
+      "phase-actions";
+
+
+    const selectBtn =
+      document.createElement(
+        "button"
+      );
+
+    selectBtn.className =
+      "select-all-btn";
+
+
+    const allSelected =
+      section.items.length > 0 &&
+      section.items.every(
+        item =>
+          progress[
+            slug(item.title)
+          ] === true
+      );
+
+
+    selectBtn.textContent =
+      allSelected
+        ? "Deseleziona tutti"
+        : "Seleziona tutti";
+
+
+    selectBtn.onclick =
+      async event => {
+
+        event.stopPropagation();
+
+        const updates = {};
+
+        section.items.forEach(
+          item => {
+
+            updates[
+              slug(item.title)
+            ] =
+              !allSelected;
+
+          }
+        );
+
+
+        progressCache =
+          {
+            ...progressCache,
+            ...updates
+          };
+
+
+        try{
+
+          await update(
+            progressRef(),
+            updates
+          );
+
+          await render();
+
+          document.getElementById(
+            "status"
+          ).textContent =
+            allSelected
+              ? "Elementi deselezionati."
+              : "Tutti gli elementi selezionati ✓";
+
+        }catch(err){
+
+          console.error(err);
+
+          document.getElementById(
+            "status"
+          ).textContent =
+            "Errore durante la sincronizzazione.";
+
+        }
+
+      };
+
+
+    const chevron =
+      document.createElement(
+        "span"
+      );
+
+    chevron.className =
+      "chevron";
+
+    chevron.textContent =
+      "⌄";
+
+
+    actions.append(
+      selectBtn,
+      chevron
+    );
+
+
+    header.append(
+      left,
+      actions
+    );
+
+
+    header.onclick =
+      () =>
+        phase.classList.toggle(
+          "open"
+        );
+
+
+    const body =
+      document.createElement(
+        "div"
+      );
+
+    body.className =
+      "phase-body";
+
+
+    items.forEach(item => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "card";
+
+
+      const itemKey =
+        slug(item.title);
+
+
+      const checked =
+        progress[itemKey] === true;
+
+
+      if(checked)
+        card.classList.add(
+          "done"
+        );
+
+
+      const checkbox =
+        document.createElement(
+          "input"
+        );
+
+      checkbox.type =
+        "checkbox";
+
+      checkbox.className =
+        "check";
+
+      checkbox.checked =
+        checked;
+
+
+      checkbox.setAttribute(
+        "aria-label",
+        "Segna come visto: " +
+        item.title
+      );
+
+
+      checkbox.onchange =
+        async () => {
+
+          card.classList.toggle(
+            "done",
+            checkbox.checked
+          );
+
+          await saveProgress(
+            item.title,
+            checkbox.checked
+          );
+
+          await render();
+
+        };
+
+
+      const title =
+        document.createElement(
+          "span"
+        );
+
+      title.className =
+        "title";
+
+      title.textContent =
+        item.title;
+
+
+      const badge =
+        document.createElement(
+          "span"
+        );
+
+      badge.className =
+        "badge " +
+        item.type;
+
+      badge.textContent =
+        item.type === "serie"
+          ? "Serie"
+          : "Film";
+
+
+      card.append(
+        checkbox,
+        title,
+        badge
+      );
+
+      body.appendChild(
+        card
+      );
+
+    });
+
+
+    phase.append(
+      header,
+      body
+    );
+
+    content.appendChild(
+      phase
+    );
+
+  });
 
 
   document.getElementById(
@@ -1581,19 +1812,22 @@ function render(){
 
 
 /* =========================================================
-   AGGIORNA PROGRESSO
+   PROGRESSO GENERALE
 ========================================================= */
 
 function updateProgress(){
 
   const items =
-    allItems();
-
+    buildMarvelData()
+      .flatMap(
+        section =>
+          section.items
+      );
 
   const checked =
     items.filter(
       item =>
-        currentProgress[
+        progressCache[
           slug(item.title)
         ] === true
     ).length;
@@ -1624,34 +1858,21 @@ function updateProgress(){
 
 
 /* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(value){
-
-  return String(value).replace(
-    /[&<>"']/g,
-    c => ({
-
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-
-    }[c])
-  );
-
-}
-
-
-/* =========================================================
-   CARICAMENTO MARVEL.JSON
+   LOAD
 ========================================================= */
 
 async function load(){
 
   try{
+
+    /*
+      Il file JSON viene ancora caricato
+      per mantenere compatibilità con
+      il tuo sistema GitHub.
+      
+      L'ordinamento del tracker viene
+      invece gestito dal codice qui sopra.
+    */
 
     const res =
       await fetch(
@@ -1662,58 +1883,40 @@ async function load(){
       );
 
 
-    if(!res.ok){
+    if(res.ok){
 
-      throw new Error(
-        "HTTP " + res.status
-      );
+      const json =
+        await res.json();
+
+      if(json.source){
+
+        document.getElementById(
+          "sourceLink"
+        ).href =
+          json.source;
+
+      }
 
     }
 
 
-    data =
-      await res.json();
-
-
-    document.getElementById(
-      "sourceLink"
-    ).href =
-      data.source || "#";
-
-
-    const date =
-      data.updatedAt
-        ? new Date(
-            data.updatedAt
-          ).toLocaleString(
-            "it-IT"
-          )
-        : "prima pubblicazione";
-
+    await render();
 
     document.getElementById(
       "status"
     ).textContent =
-      "Dati aggiornati: " + date;
-
-
-    render();
-
+      "Dati caricati ✓";
 
   }catch(err){
 
-    console.error(
-      "Errore caricamento dati:",
-      err
-    );
+    console.error(err);
 
+    await render();
 
     document.getElementById(
       "status"
     ).textContent =
-      "Impossibile caricare i dati. " +
-      "Apri il sito tramite GitHub Pages " +
-      "o un server locale.";
+      "Tracker caricato.";
 
   }
 
@@ -1721,127 +1924,151 @@ async function load(){
 
 
 /* =========================================================
-   PASSA A CODICE ESISTENTE
+   LOGIN BUTTONS
 ========================================================= */
 
-existingUserButton.addEventListener(
-  "click",
-  () => {
-
-    newUserBox.style.display =
-      "none";
-
-    existingUserBox.style.display =
-      "block";
-
-    loginError.textContent =
-      "";
-
-    loginError.className =
-      "login-error";
-
-    codeInput.value =
-      "";
-
-    /*
-      Focus esplicito sul campo.
-    */
-
-    setTimeout(
-      () => codeInput.focus(),
-      50
-    );
-
-  }
-);
+document
+  .getElementById("startButton")
+  .addEventListener(
+    "click",
+    createNewProfile
+  );
 
 
-/* =========================================================
-   TORNA A NUOVO PROFILO
-========================================================= */
-
-newUserButton.addEventListener(
-  "click",
-  () => {
-
-    existingUserBox.style.display =
-      "none";
-
-    newUserBox.style.display =
-      "block";
-
-    loginError.textContent =
-      "";
-
-    loginError.className =
-      "login-error";
-
-    generatedCode.textContent =
-      "------";
-
-  }
-);
+document
+  .getElementById("loginButton")
+  .addEventListener(
+    "click",
+    loginWithCode
+  );
 
 
-/* =========================================================
-   INIZIA
-========================================================= */
+document
+  .getElementById("existingUserButton")
+  .addEventListener(
+    "click",
+    () => {
 
-startButton.addEventListener(
-  "click",
-  createNewProfile
-);
+      document.getElementById(
+        "newUserBox"
+      ).style.display =
+        "none";
 
+      document.getElementById(
+        "existingUserBox"
+      ).style.display =
+        "block";
 
-/* =========================================================
-   ACCEDI
-========================================================= */
+      document.getElementById(
+        "loginError"
+      ).textContent =
+        "";
 
-loginButton.addEventListener(
-  "click",
-  loginWithCode
-);
-
-
-/* =========================================================
-   CAMPO CODICE
-========================================================= */
-
-codeInput.addEventListener(
-  "input",
-  event => {
-
-    event.target.value =
-      event.target.value
-        .toUpperCase()
-        .replace(
-          /[^A-Z0-9]/g,
-          ""
-        )
-        .slice(0,6);
-
-  }
-);
-
-
-/* =========================================================
-   INVIO DA TASTIERA
-========================================================= */
-
-codeInput.addEventListener(
-  "keydown",
-  event => {
-
-    if(event.key === "Enter"){
-
-      event.preventDefault();
-
-      loginWithCode();
+      document.getElementById(
+        "codeInput"
+      ).focus();
 
     }
+  );
 
-  }
-);
+
+document
+  .getElementById("newUserButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      document.getElementById(
+        "existingUserBox"
+      ).style.display =
+        "none";
+
+      document.getElementById(
+        "newUserBox"
+      ).style.display =
+        "block";
+
+      document.getElementById(
+        "loginError"
+      ).textContent =
+        "";
+
+    }
+  );
+
+
+document
+  .getElementById("codeInput")
+  .addEventListener(
+    "input",
+    event => {
+
+      event.target.value =
+        event.target.value
+          .toUpperCase()
+          .replace(
+            /[^A-Z0-9]/g,
+            ""
+          )
+          .slice(0,6);
+
+    }
+  );
+
+
+document
+  .getElementById("codeInput")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(event.key === "Enter"){
+
+        loginWithCode();
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   ORDINE
+========================================================= */
+
+document
+  .querySelectorAll(".order-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        document
+          .querySelectorAll(".order-btn")
+          .forEach(
+            b =>
+              b.classList.remove(
+                "active"
+              )
+          );
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        currentOrder =
+          button.dataset.order;
+
+
+        await render();
+
+      }
+    );
+
+  });
 
 
 /* =========================================================
@@ -1852,12 +2079,12 @@ document
   .getElementById("search")
   .addEventListener(
     "input",
-    event => {
+    async event => {
 
       query =
         event.target.value;
 
-      render();
+      await render();
 
     }
   );
@@ -1869,43 +2096,41 @@ document
 
 document
   .querySelectorAll(".filter-btn")
-  .forEach(
-    button => {
+  .forEach(button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+    button.addEventListener(
+      "click",
+      async () => {
 
-          document
-            .querySelectorAll(".filter-btn")
-            .forEach(
-              b =>
-                b.classList.remove(
-                  "active"
-                )
-            );
-
-
-          button.classList.add(
-            "active"
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach(
+            b =>
+              b.classList.remove(
+                "active"
+              )
           );
 
 
-          filter =
-            button.dataset.filter;
+        button.classList.add(
+          "active"
+        );
 
 
-          render();
+        filter =
+          button.dataset.filter;
 
-        }
-      );
 
-    }
-  );
+        await render();
+
+      }
+    );
+
+  });
 
 
 /* =========================================================
-   RESET PROGRESSI
+   RESET
 ========================================================= */
 
 document
@@ -1932,26 +2157,18 @@ document
           {}
         );
 
+        progressCache = {};
 
-        currentProgress = {};
-
-
-        render();
-
+        await render();
 
         document.getElementById(
           "status"
         ).textContent =
           "Progressi azzerati.";
 
+      }catch(err){
 
-      }catch(error){
-
-        console.error(
-          "Errore reset:",
-          error
-        );
-
+        console.error(err);
 
         document.getElementById(
           "status"
@@ -1968,20 +2185,22 @@ document
    AVVIO
 ========================================================= */
 
-/*
-  IMPORTANTE:
-  Non facciamo più il controllo automatico
-  del localStorage.
+(async function(){
 
-  Il sito parte sempre dalla schermata
-  iniziale.
+  const logged =
+    await checkSavedCode();
 
-  Questo evita che un vecchio codice
-  blocchi l'accesso.
-*/
 
-generatedCode.textContent =
-  "------";
+  if(!logged){
+
+    document.getElementById(
+      "generatedCode"
+    ).textContent =
+      "------";
+
+  }
+
+})();
 
 </script>
 
