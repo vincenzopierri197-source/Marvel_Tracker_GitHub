@@ -1,40 +1,88 @@
 {
   "source": "https://www.sorrisi.com/cinema/migliori-film/la-lista-dei-film-marvel-ordine-cronologico/",
   "updatedAt": null,
-  "sections": [
-    {
-      "phase": "Già Visti (Fino al 2023)",
-      "items": [
+
+  "orders": {
+
+    "marvel": {
+      "name": "Ordine Marvel",
+      "sections": [
         {
-          "title": "Captain America: Il Primo Vendicatore",
-          "type": "film"
+          "phase": "Saga dell'Infinito — Fase 1",
+          "items": [
+            {
+              "title": "Iron Man",
+              "type": "film",
+              "year": 2008
+            },
+            {
+              "title": "L'Incredibile Hulk",
+              "type": "film",
+              "year": 2008
+            },
+            {
+              "title": "Iron Man 2",
+              "type": "film",
+              "year": 2010
+            },
+            {
+              "title": "Thor",
+              "type": "film",
+              "year": 2011
+            },
+            {
+              "title": "Captain America: Il Primo Vendicatore",
+              "type": "film",
+              "year": 2011
+            },
+            {
+              "title": "Avengers",
+              "type": "film",
+              "year": 2012
+            }
+          ]
+        }
+
+        /* ... resto dell'ordine Marvel ... */
+      ]
+    },
+
+    "release": {
+      "name": "Ordine di uscita",
+      "sections": [
+        {
+          "phase": "2008",
+          "items": [
+            {
+              "title": "Iron Man",
+              "type": "film",
+              "year": 2008
+            },
+            {
+              "title": "L'Incredibile Hulk",
+              "type": "film",
+              "year": 2008
+            }
+          ]
         },
+
         {
-          "title": "Capitan Marvel",
-          "type": "film"
-        },
-        {
-          "title": "Iron Man",
-          "type": "film"
-        },
-        {
-          "title": "Iron Man 2",
-          "type": "film"
-        },
-        {
-          "title": "L'incredibile Hulk",
-          "type": "film"
-        },
-        {
-          "title": "Thor",
-          "type": "film"
-        },
-        {
-          "title": "The Avengers",
-          "type": "film"
-        },
-        {
-          "title": "Thor: The Dark World",
+          "phase": "2010",
+          "items": [
+            {
+              "title": "Iron Man 2",
+              "type": "film",
+              "year": 2010
+            }
+          ]
+        }
+
+        /* ... resto ordinato per anno ... */
+      ]
+    }
+
+  }
+}          "title": "Thor: The Dark World",
           "type": "film"
         },
         {
