@@ -19,9 +19,13 @@
   --green:#48d597;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:auto;
+}
 
 body{
   margin:0;
@@ -31,7 +35,10 @@ body{
   min-height:100vh;
 }
 
-button,input{font:inherit}
+button,
+input{
+  font:inherit;
+}
 
 .container{
   width:min(1000px,100%);
@@ -1165,11 +1172,6 @@ function slug(s){
    ORDINE MARVEL
 ========================================================= */
 
-/*
-   Questa struttura segue ESATTAMENTE
-   l'ordine fornito dall'utente.
-*/
-
 const marvelOrder = [
 
   {
@@ -1420,6 +1422,85 @@ function visible(item){
 
 
 /* =========================================================
+   AGGIORNA CONTATORI FASI
+========================================================= */
+
+function updatePhaseCounters(){
+
+  const sections =
+    currentSections();
+
+  document
+    .querySelectorAll(".phase")
+    .forEach(phaseEl => {
+
+      const phaseTitle =
+        phaseEl.querySelector(
+          ".phase-title"
+        );
+
+      if(!phaseTitle)
+        return;
+
+      const section =
+        sections.find(
+          section =>
+            section.phase ===
+            phaseTitle.textContent
+        );
+
+      if(!section)
+        return;
+
+      const completed =
+        section.items.filter(
+          item =>
+            progressCache[
+              slug(item.title)
+            ] === true
+        ).length;
+
+      const meta =
+        phaseEl.querySelector(
+          ".phase-meta"
+        );
+
+      if(meta){
+
+        meta.textContent =
+          `${completed}/${section.items.length} completati`;
+
+      }
+
+      const selectBtn =
+        phaseEl.querySelector(
+          ".select-all-btn"
+        );
+
+      if(selectBtn){
+
+        const allSelected =
+          section.items.length > 0 &&
+          section.items.every(
+            item =>
+              progressCache[
+                slug(item.title)
+              ] === true
+          );
+
+        selectBtn.textContent =
+          allSelected
+            ? "Deseleziona tutti"
+            : "Seleziona tutti";
+
+      }
+
+    });
+
+}
+
+
+/* =========================================================
    RENDER
 ========================================================= */
 
@@ -1443,7 +1524,7 @@ async function render(){
   let lastSaga = "";
 
 
-  sections.forEach((section,index) => {
+  sections.forEach(section => {
 
     const items =
       section.items.filter(
@@ -1618,7 +1699,19 @@ async function render(){
             updates
           );
 
+          /*
+           * Manteniamo la posizione di scroll
+           * anche con "Seleziona tutti".
+           */
+          const scrollY =
+            window.scrollY;
+
           await render();
+
+          window.scrollTo(
+            0,
+            scrollY
+          );
 
           document.getElementById(
             "status"
@@ -1700,10 +1793,13 @@ async function render(){
         progress[itemKey] === true;
 
 
-      if(checked)
+      if(checked){
+
         card.classList.add(
           "done"
         );
+
+      }
 
 
       const checkbox =
@@ -1728,20 +1824,60 @@ async function render(){
       );
 
 
+      /*
+       * =====================================================
+       * CORREZIONE PRINCIPALE DELLO SCROLL
+       *
+       * NON eseguiamo render() dopo una spunta.
+       * La card viene aggiornata direttamente.
+       * =====================================================
+       */
+
       checkbox.onchange =
         async () => {
 
+          const checkedNow =
+            checkbox.checked;
+
+
+          /*
+           * Aggiorna immediatamente
+           * l'aspetto della card.
+           */
           card.classList.toggle(
             "done",
-            checkbox.checked
+            checkedNow
           );
 
+
+          /*
+           * Aggiorna la cache locale.
+           */
+          progressCache[itemKey] =
+            checkedNow;
+
+
+          /*
+           * Salva su Firebase.
+           */
           await saveProgress(
             item.title,
-            checkbox.checked
+            checkedNow
           );
 
-          await render();
+
+          /*
+           * Aggiorna la progress bar
+           * senza ricostruire la pagina.
+           */
+          updateProgress();
+
+
+          /*
+           * Aggiorna i contatori
+           * delle fasi.
+           */
+          updatePhaseCounters();
 
         };
 
@@ -1865,15 +2001,6 @@ async function load(){
 
   try{
 
-    /*
-      Il file JSON viene ancora caricato
-      per mantenere compatibilità con
-      il tuo sistema GitHub.
-      
-      L'ordinamento del tracker viene
-      invece gestito dal codice qui sopra.
-    */
-
     const res =
       await fetch(
         "data/marvel.json",
@@ -1890,10 +2017,14 @@ async function load(){
 
       if(json.source){
 
-        document.getElementById(
-          "sourceLink"
-        ).href =
-          json.source;
+        /*
+         * Il codice originale cercava
+         * sourceLink, ma l'elemento non esiste
+         * nell'HTML.
+         *
+         * Lasciamo comunque il caricamento
+         * del JSON compatibile.
+         */
 
       }
 
